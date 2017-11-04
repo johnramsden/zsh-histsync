@@ -10,7 +10,7 @@ colors
 ZSH_HISTSYNC_FILE_NAME=zsh_history
 
 # Set zsh histsync location to XDG config directory if set
-ZSH_HISTSYNC_REPO=${XDG_CONFIG_HOME:-${HOME}/.config}/zsh-history
+ZSH_HISTSYNC_REPO=${ZSH_CUSTOM}/zsh-history
 
 ZSH_HISTSYNC_FILE=${ZSH_HISTSYNC_REPO}/${ZSH_HISTSYNC_FILE_NAME}
 
