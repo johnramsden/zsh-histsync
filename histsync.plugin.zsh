@@ -44,7 +44,7 @@ function histsync_pull() {
 
     # Backup
     echo "Backing up old history and applying new merged history"
-    cp --backup=numbered "${ZSH_HISTSYNC_FILE}.merged" "${HISTFILE}"
+    cp --backup=simple "${ZSH_HISTSYNC_FILE}.merged" "${HISTFILE}"
 
     local BACKUP_SUCCESS=${?}
     cd ${DIR}
@@ -62,7 +62,7 @@ function histsync_commit() {
   local DIR=${CWD}
   cd ${ZSH_HISTSYNC_REPO}
 
-  cp --backup=numbered "${HISTFILE}" "${ZSH_HISTSYNC_FILE_NAME}"
+  cp --backup=simple "${HISTFILE}" "${ZSH_HISTSYNC_FILE_NAME}"
   local BACKUP_SUCCESS=${?}
 
   git add "${ZSH_HISTSYNC_FILE_NAME}" && git commit -m "${GIT_COMMIT_MSG}"
