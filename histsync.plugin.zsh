@@ -1,6 +1,7 @@
 ###
 # John Ramsden
 # johnramsden @ github
+# Version 0.1.0
 ###
 
 autoload -U colors
@@ -42,7 +43,7 @@ function histsync_pull() {
     fi
 
     # Merge
-    cat ${HISTFILE} ${ZSH_HISTSYNC_FILE_NAME} | awk '/:[0-9]/ { if(s) { print s } s=$0 } !/:[0-9]/ { s=s""$0 } END { print s }' | sort -u > "${ZSH_HISTSYNC_FILE}.merged"
+    cat ${HISTFILE} ${ZSH_HISTSYNC_FILE_NAME} | awk '/:[0-9]/ { if(s) { print s } s=$0 } !/:[0-9]/ { s=s""$0 } END { print s }' | sort -n > "${ZSH_HISTSYNC_FILE}.merged"
     local MERGE_SUCCESS=${?}
     cd ${DIR}
 
@@ -55,7 +56,7 @@ function histsync_pull() {
     echo "Backing up old history and applying new merged history"
     cp --backup=simple "${ZSH_HISTSYNC_FILE}.merged" "${HISTFILE}"
     rm "${ZSH_HISTSYNC_FILE}.merged"
-    
+
     local BACKUP_SUCCESS=${?}
     cd ${DIR}
 
@@ -128,15 +129,24 @@ function histsync_clone() {
 }
 
 function histsync_sync() {
-  histsync_commit && histsync_pull && histsync_push
-
-  local SYNC_SUCCESS=${?}
-  cd ${DIR}
-
-  if [[ ${SYNC_SUCCESS} != 0 ]]; then
-      echo "${bold_color}${fg[red]}Failed to sync git repo...${reset_color}";
+  histsync_pull
+  if [[ ${?} != 0 ]]; then
+      echo "${bold_color}${fg[red]}Failed to pull from git repo...${reset_color}";
       return 1
   fi
+
+  histsync_commit
+  if [[ ${?} != 0 ]]; then
+      echo "${bold_color}${fg[red]}Failed commit to git repo...${reset_color}";
+      return 1
+  fi
+
+  histsync_push
+  if [[ ${?} != 0 ]]; then
+      echo "${bold_color}${fg[red]}Failed to push to git repo...${reset_color}";
+      return 1
+  fi
+
   return 0
 }
 
