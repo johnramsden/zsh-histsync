@@ -15,7 +15,7 @@ cd ${ZSH_CUSTOM}
 git init zsh-history
 ```
 
-Add a remote location where history will be kept, and copy in your history you want to start with. Alternate Lee create a blank file to start with empty history
+Add a remote location where history will be kept, and copy in your history you want to start with. alternatively, create a blank file to start with empty history.
 
 ```
 git remote add origin git@github.com:johnramsden/zsh-history.git
@@ -23,7 +23,7 @@ cp ${HOME}/.zsh_history zsh_history
 git add zsh_history
 ```
 
-With the history set up, clone the plugin in your oh-my-zsh plugin directory.
+With the history configured, clone the plugin in your oh-my-zsh plugin directory.
 
 ```
 cd ${ZSH_CUSTOM}/plugins
@@ -71,7 +71,7 @@ Format: ```histsync [subcommand]```
 
 Command                 | Description
 ------------------------|---
-```clone <repository>```      | Clone a repository to ZSH_HISTSYNC_REPO
+```clone <repository>```      | Clone a repository to ```ZSH_HISTSYNC_REPO```
 ```commit```                  | Commit the current history file
 ```help```                    | Print usage information
 ```pull```                    | Pull from remote and merge current history
@@ -79,7 +79,7 @@ Command                 | Description
 
 ### Variables
 
-To override the default options, export the associated variable in your zshrc
+To override the default options, export the associated variable in your ```zshrc```
 
 Variable                 | Description
 ------------------------|---
