@@ -17,7 +17,16 @@ ZSH_HISTSYNC_FILE=${ZSH_HISTSYNC_REPO}/${ZSH_HISTSYNC_FILE_NAME}
 GIT_COMMIT_MSG="History update from $(hostname) - $(date)"
 
 function histsync_usage() {
-    echo "${bold_color}${fg[red]}Usage: ${0} [push]${reset_color}" 1>&2; return;
+    echo "${bold_color}${fg[red]}Usage:${reset_color}" 1>&2;
+
+    echo "histsync"
+    echo "histsync clone"
+    echo "histsync commit <repository>"
+    echo "histsync help"
+    echo "histsync pull"
+    echo "histsync push"
+
+    return 0;
 }
 
 # Pull current master and merge with zsh_history
@@ -45,7 +54,8 @@ function histsync_pull() {
     # Backup
     echo "Backing up old history and applying new merged history"
     cp --backup=simple "${ZSH_HISTSYNC_FILE}.merged" "${HISTFILE}"
-
+    rm "${ZSH_HISTSYNC_FILE}.merged"
+    
     local BACKUP_SUCCESS=${?}
     cd ${DIR}
 
@@ -131,23 +141,23 @@ function histsync_sync() {
 }
 
 function histsync() {
-  command="${1}"
+  command="${1:-sync}"
 
   case ${command} in
+              clone )
+              histsync_clone "${2}"
+              ;;
+              commit )
+              histsync_commit
+              ;;
               pull )
               histsync_pull
               ;;
               push )
               histsync_push
               ;;
-              commit )
-              histsync_commit
-              ;;
               sync )
               histsync_sync
-              ;;
-              clone )
-              histsync_clone "${2}"
               ;;
               * )
               histsync_usage
