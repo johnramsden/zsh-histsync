@@ -12,7 +12,7 @@ colors
 
 ZSH_HISTSYNC_FILE_NAME=zsh_history           # Default settings, overrride in zshrc
 ZSH_HISTSYNC_REPO=${ZSH_CUSTOM}/zsh-history  # Set zsh histsync repo location
-GIT_COMMIT_MSG="History update from $(hostname) - $(date)"  # Set commit message
+GIT_COMMIT_MSG="Histsync $(hostname) - $(date)"  # Set commit message
 
 ## Local variables and functions
 
